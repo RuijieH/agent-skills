@@ -1,0 +1,17 @@
+{
+  "project_name": "TODO-name-this-project",
+  "goal_description": "TODO: one sentence — what are we optimizing or investigating?",
+  "metric": {
+    "name": "TODO-metric-name",
+    "goal": "min",
+    "extract_cmd": "TODO: a shell snippet, run from the project root after run_cmd, that prints ONE number to stdout. e.g.  grep '^score:' run.log | tail -1 | awk '{print $2}'"
+  },
+  "secondary_metrics": {
+  },
+  "setup_cmd": "TODO: one-time-ish env/code prep run inside each fresh worktree before experiments. e.g.  uv sync   (use '' to skip)",
+  "run_cmd": "TODO: the command that produces the metric. Redirect output to run.log. e.g.  python eval.py > run.log 2>&1",
+  "target_files": ["TODO-file-the-worker-may-edit.py"],
+  "readonly_files": [],
+  "timeout_sec": 900,
+  "notes": "goal is 'min' or 'max'. target_files = the ONLY files a worker may modify. readonly_files = never touch. timeout_sec caps ONE experiment run: smoke-test one run at setup, aim for <=10 min via a REPRESENTATIVE data/steps subset, set timeout_sec ~ 1.5-2x the measured time; longer runs up to 18000 = 5h are supported when a short proxy isn't possible (workers run anything over ~10 min as a background task). Adapter scripts (metric wrappers, remote sync+run helpers) belong in .autoresearch/bin/ (worktree-relative paths in the cmds), never in the project's own tree. Edit this file, then prep + launch workers."
+}

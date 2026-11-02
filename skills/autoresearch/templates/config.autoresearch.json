@@ -1,0 +1,18 @@
+{
+  "project_name": "autoresearch",
+  "goal_description": "Lowest val_bpb (validation bits-per-byte) on a fixed 5-minute single-GPU pretraining budget.",
+  "metric": {
+    "name": "val_bpb",
+    "goal": "min",
+    "extract_cmd": "grep '^val_bpb:' run.log | tail -1 | awk '{print $2}'"
+  },
+  "secondary_metrics": {
+    "memory_gb": "grep '^peak_vram_mb:' run.log | tail -1 | awk '{printf \"%.1f\", $2/1024}'"
+  },
+  "setup_cmd": "uv sync",
+  "run_cmd": "uv run train.py > run.log 2>&1",
+  "target_files": ["train.py"],
+  "readonly_files": ["prepare.py"],
+  "timeout_sec": 900,
+  "notes": "prepare.py is READ-ONLY (fixed eval/data/tokenizer). Data prep (`uv run prepare.py`) must already be done once before dispatching workers; it is not re-run per experiment. VRAM is a soft constraint."
+}
